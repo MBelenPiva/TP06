@@ -7,7 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.tp06.Bases.BaseActivity;
+
+public class MainActivity extends BaseActivity {
     private EditText edtNombre;
     private Button btnContinuar;
 
@@ -18,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         ObtenerReferencias();
 
@@ -34,14 +35,14 @@ public class MainActivity extends AppCompatActivity {
         btnContinuar = findViewById(R.id.btnContinuar);
     }
 
-    private void SetearListeners(){
-        btnContinuar = findViewById(btnContinuar_Click);
+    private void SetearListeners() {
+        btnContinuar.setOnClickListener(btnContinuar_Click);
     }
 
     private View.OnClickListener btnContinuar_Click = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            goToFragmentWithReplace(acercaDeFragment, true);
+            goToFragmentWithReplace(2, acercaDeFragment, true);
         }
     };
 
@@ -51,6 +52,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showInitialFragment(){
-        goToFragmentWithReplace(mapaFragment, true);
+        goToFragmentWithReplace(3,mapaFragment, true);
     }
 }
