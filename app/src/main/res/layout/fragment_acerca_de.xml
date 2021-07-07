@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AcercaDeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="El objetivo del juego es que el jugador valla adivinando la ciudad que se muestra en e mapa. A medida que va acertando, el juego continua. Si no acierta en la respuesta, esto indica que perdio y volvera a empezar"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/btnComenzar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Comenzar " />
+
+        <Button
+            android:id="@+id/btnRanking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ranking" />
+    </LinearLayout>
+
 
 </FrameLayout>
