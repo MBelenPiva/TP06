@@ -1,29 +1,30 @@
 package com.example.tp06;
 
+import android.graphics.Camera;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-<<<<<<< HEAD
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
-=======
 import com.example.tp06.Utils.LogHelper;
->>>>>>> bbff42445d67f01e0c95b3f98c71e7ea9fbcb80c
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+
+import java.util.ArrayList;
 
 public class MapaFragment extends Fragment {
     private View layoutRoot = null;
@@ -42,7 +43,7 @@ public class MapaFragment extends Fragment {
         LogHelper.d("MapaFragment -> onCreateView");
 
              if (layoutRoot == null) {
-                LayoutRoot = inflater.inflate(R.layout.fragment_mapa, container, false);
+                layoutRoot = inflater.inflate(R.layout.fragment_mapa, container, false);
 
                 ObtenerReferencias();
 
@@ -121,7 +122,108 @@ public class MapaFragment extends Fragment {
             googleMap.addMarker(markerList.get(i));
         }
 
+        cameraPosition = new CameraPosition.Builder().target(latLngEstatuaDeLaLibertad).zoom(10).build();
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+        /*
+        ZOOM
+        https://developers.google.com/maps/documentation/android-sdk/views
+        1: World
+        5: Continent
+        10: City
+        15: Streets
+        20: Buildings
+         */
+    }
+
+    private void PropiedadesDeUnMarker(){
+        LatLng latLngEstatuaDeLaLibertad, latLngLaTorreEiffel, latLngInsadong, latLngCabildo;
+        MarkerOptions markerEstatuaDeLaLibertad, markerLaTorreEiffel, markerInsadong, markerCabildo;
+        CameraPosition cameraPosition;
+
+        markerEstatuaDeLaLibertad.alpha(0.5f); //opacidad
+
+        markerEstatuaDeLaLibertad.icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker));
+
+        //rotando el marker 90 grados
+        markerEstatuaDeLaLibertad.rotation(90.f);
+        markerLaTorreEiffel.rotation(90.f);
+        markerInsadong.rotation(90.f);
+        markerCabildo.rotation(90.f);
+
+        googleMap.addMarker(markerEstatuaDeLaLibertad);
+        googleMap.addMarker(markerLaTorreEiffel);
+        googleMap.addMarker(markerInsadong);
+        googleMap.addMarker(markerCabildo);
+
+        //pongo el target, el Zoom y animo la camara.
+
+        cameraPosition = new CameraPosition.Builder().target(latLngEstatuaDeLaLibertad).zoom(12).build();
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    }
+
+    private void AgregarUnListDeMarkers(){
+        ArrayList<MarkerOptions> markerList;
+        LatLng firstMarkerPosition;
+        CameraPosition cameraPosition;
+
+        googleMap.clear();
+
+        //obtengo un ArrayList de Markers, y me guardo el primero asi le seteo como Target.
+
+        markerList = GetUsuarioMarkeroptions();
+        firstMarkerPosition = markerList.get(0).getPosition();
+
+        //agrego los markers al mapa
+
+        for(int i = 0; i < markerList.size(); i++){
+            googleMap.addMarker(markerList.get(i));
+        }
+
+        //pongo el target, el zoom y animo la camara.
+
         cameraPosition = new CameraPosition.Builder().target(firstMarkerPosition).zoom(12).build();
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    }
+
+    private void Polylines(){
+        LatLng latLngEstatuaDeLaLibertad, latLngLaTorreEiffel, latLngInsadong, latLngCabildo;
+        MarkerOptions markerEstatuaDeLaLibertad, markerLaTorreEiffel, markerInsadong, markerCabildo;
+        CameraPosition cameraPosition;
+
+        latLngEstatuaDeLaLibertad = new LatLng(19.314512, -99.112203);
+        latLngLaTorreEiffel = new LatLng(48.8583701, 2.2944813);
+        latLngInsadong = new LatLng(37.566, 126.9784);
+        latLngCabildo = new LatLng(-38.4833, -61.9);
+
+        markerEstatuaDeLaLibertad = GoogleMapHelper.CreateMarker(latLngEstatuaDeLaLibertad,
+                "Estatua de la libertad", "Primera vision de los inmigrantes europeos al llegar a Estados Unidos",
+                BitmapDescriptorFactory.fromResource(R.drawable.custom_marker));
+
+        markerLaTorreEiffel = GoogleMapHelper.CreateMarker(latLngLaTorreEiffel,
+                "La Torre Eiffel", "Una de las obras más importantes",
+                BitmapDescriptorFactory.fromResource(R.drawable.custom_marker));
+
+        markerInsadong = GoogleMapHelper.CreateMarker(latLngInsadong,
+                "Insadong", "Lugar turistico de corea",
+                BitmapDescriptorFactory.fromResource(R.drawable.custom_marker));
+
+        markerCabildo = GoogleMapHelper.CreateMarker(latLngCabildo,
+                "El Cabildo", "Fue una de las primeras expresiones democráticas que vivió esta gran aldea",
+                BitmapDescriptorFactory.fromResource(R.drawable.custom_marker));
+
+        googleMap.addMarker(markerEstatuaDeLaLibertad);
+        googleMap.addMarker(markerLaTorreEiffel);
+        googleMap.addMarker(markerInsadong);
+        googleMap.addMarker(markerCabildo);
+
+        //https://developers.google.com/maps/documentation/android-sdk/polygon-tutorial
+        //agrego los polylines
+
+        Polyline polyline = googleMap.addPolyline(new PolylineOptions()
+        .add(latLngEstatuaDeLaLibertad, latLngLaTorreEiffel, latLngInsadong, latLngCabildo));
+
+        cameraPosition = new CameraPosition.Builder().target(latLngEstatuaDeLaLibertad).zoom(12).build();
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
