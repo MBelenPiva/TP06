@@ -14,8 +14,10 @@
         android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -26,32 +28,32 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/btn1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/btn4"
+            android:layout_width="90dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="NUEVA YORK" />
-
-        <Button
-            android:id="@+id/btn2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="PARIS" />
+            android:text="BUENOS AIRES" />
 
         <Button
             android:id="@+id/btn3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="90dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="SEUL" />
 
         <Button
-            android:id="@+id/btn4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/btn2"
+            android:layout_width="90dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="BUENOS AIRES" />
+            android:text="PARIS" />
+
+        <Button
+            android:id="@+id/btn1"
+            android:layout_width="90dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="NEW YORK" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

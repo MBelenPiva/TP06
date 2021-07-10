@@ -11,24 +11,45 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="El objetivo del juego es que el jugador valla adivinando la ciudad que se muestra en e mapa. A medida que va acertando, el juego continua. Si no acierta en la respuesta, esto indica que perdio y volvera a empezar"
-            android:textSize="30sp" />
+            android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/btnComenzar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Comenzar " />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:text="El objetivo del juego es que el jugador valla adivinando la ciudad que se muestra en e mapa. A medida que va acertando, el juego continua. Si no acierta en la respuesta, esto indica que perdio y volvera a empezar."
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btnRanking"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ranking" />
+            <Button
+                android:id="@+id/btnComenzar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Comenzar "
+                app:backgroundTint="#BAB9B9"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="1063dp" />
+
+            <Button
+                android:id="@+id/btnRanking"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ranking"
+                app:backgroundTint="#BAB9B9"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="431dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
 
 
