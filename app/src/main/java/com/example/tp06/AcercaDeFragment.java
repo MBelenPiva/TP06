@@ -22,9 +22,6 @@ public class AcercaDeFragment extends Fragment {
     View layoutroot;
 
     public AcercaDeFragment() {
-
-
-
     }
 
     @Override

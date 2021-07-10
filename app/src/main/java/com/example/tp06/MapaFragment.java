@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.tp06.Utils.GoogleMapHelper;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.example.tp06.Utils.LogHelper;
@@ -24,6 +25,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
@@ -35,35 +39,36 @@ public class MapaFragment extends Fragment {
 
 
     public MapaFragment() {
+
     }
 
     @Override
-    public void onCreate(LayoutInflater inflater, ViewGroup container,
-                         Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
+        // Inflate the layout for this fragment
         LogHelper.d("MapaFragment -> onCreateView");
 
-             if (layoutRoot == null) {
-                layoutRoot = inflater.inflate(R.layout.fragment_mapa, container, false);
+        if (layoutRoot == null) {
+            layoutRoot = inflater.inflate(R.layout.fragment_mapa, container, false);
 
-                ObtenerReferencias();
+            ObtenerReferencias();
 
-                SetearListeners();
+            SetearListeners();
 
-                mapView.OnCreate(savedInstanceState);
-                mapView.OnResume();
+            mapView.onCreate(savedInstanceState);
+            mapView.onResume(); // needed to get the map to display immediately
 
-                try{
-                    MapsInitializer.initialize(getMainActivity().getApplicationContext());
-                } catch (Exception e) {
-                    LogHelper.d(e.getMessage());
-                }
-             }
-             mapView.getMapAsync(mapView_getMapAsync);
+            try {
+                MapsInitializer.initialize(getContext().getApplicationContext());
+            } catch (Exception e) {
+                LogHelper.d(e.getMessage());
+            }
+        }
+        mapView.getMapAsync(mapView_getMapAsync);
 
-             setActivityTitle('MAPA');
 
-             return layoutRoot;
+        return layoutRoot;
     }
 
     private void ObtenerReferencias(){
@@ -116,6 +121,50 @@ public class MapaFragment extends Fragment {
 
         googleMap.clear();
 
+        /*
+        LatLng latLngORTYatay = new LatLng(-33.852, 151.211);
+        MarkerOptions markerSydney = new MarkerOptions()
+                .position(latLngORTYatay)
+                .title("ORT Yatay")
+                .snippet("Hay buenos estudiantes..");
+        googleMap.addMarker (markerSydney);
+        */
+
+        // Creo LatLng (Latitudes y Longitudes)
+        latLngEstatuaDeLaLibertad    = new LatLng(-34.564685, -58.499212);
+        latLngLaTorreEiffel= new LatLng(-34.609732, -58.429262);
+        latLngCabildo= new LatLng(-34.609738, -58.429262);
+        latLngInsadong= new LatLng(-34.609732, -58.429262);
+
+        // Creo los markers
+        markerEstatuaDeLaLibertad   = GoogleMapHelper.CreateMarker(latLngEstatuaDeLaLibertad   , "Mi casita", "La fortaleza de polshetta!");
+        markerLaTorreEiffel  = GoogleMapHelper.CreateMarker(latLngLaTorreEiffel  , "ORT Yatay", "Hay buenos estudiantes..");
+        markerCabildo  = GoogleMapHelper.CreateMarker(latLngEstatuaDeLaLibertad   , "Mi casita", "La fortaleza de polshetta!");
+        markerInsadong = GoogleMapHelper.CreateMarker(latLngLaTorreEiffel  , "ORT Yatay", "Hay buenos estudiantes..");
+
+        //
+        // Agrego los Markers al Mapa
+        //
+        googleMap.addMarker(markerEstatuaDeLaLibertad);
+        googleMap.addMarker(markerLaTorreEiffel);
+        googleMap.addMarker(markerCabildo);
+        googleMap.addMarker(markerInsadong);
+
+        //
+        // Pongo el target, el Zoom y animo la camara.
+        //
+        cameraPosition = new CameraPosition.Builder().target(latLngEstatuaDeLaLibertad).zoom(13).build();
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+        /*  ZOOM
+            https://developers.google.com/maps/documentation/android-sdk/views
+            1: World
+            5: Landmass/continent
+            10: City
+            15: Streets
+            20: Buildings
+        */
+
         markerList = GetUsuariosMarkeroptions();
         firstMarkerPosition = markerList.get(0).getPosition();
 
@@ -126,15 +175,7 @@ public class MapaFragment extends Fragment {
         cameraPosition = new CameraPosition.Builder().target(latLngEstatuaDeLaLibertad).zoom(10).build();
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-        /*
-        ZOOM
-        https://developers.google.com/maps/documentation/android-sdk/views
-        1: World
-        5: Continent
-        10: City
-        15: Streets
-        20: Buildings
-         */
+
     }
 
     private void PropiedadesDeUnMarker(){
@@ -213,7 +254,7 @@ public class MapaFragment extends Fragment {
 
         markerCabildo = GoogleMapHelper.CreateMarker(latLngCabildo,
                 "El Cabildo", "Fue una de las primeras expresiones democráticas que vivió esta gran aldea",
-                BitmapDescriptorFactory.fromResource(R.drawable.custom_marker));
+                BitmapDescriptorFactory.fromResource(R.drawable.custom_maker));
 
         //markers al mapa
         googleMap.addMarker(markerEstatuaDeLaLibertad);
@@ -234,7 +275,7 @@ public class MapaFragment extends Fragment {
     protected OnMapReadyCallback mapView_getMapAsync = new OnMapReadyCallback() {
         @SuppressLint("MissingPermission")
         @Override
-        public void onMapReady(GoogleMap mMap) {
+        public void onMapReady(GoogleMap map) {
             googleMap = map;
 
             LatLng latLngEstatuaDeLaLibertad = new LatLng(-99.112203, 19.314512);
