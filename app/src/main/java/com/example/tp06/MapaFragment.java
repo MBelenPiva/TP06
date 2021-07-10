@@ -1,5 +1,6 @@
 package com.example.tp06;
 
+import android.annotation.SuppressLint;
 import android.graphics.Camera;
 import android.os.Bundle;
 
@@ -191,6 +192,8 @@ public class MapaFragment extends Fragment {
         MarkerOptions markerEstatuaDeLaLibertad, markerLaTorreEiffel, markerInsadong, markerCabildo;
         CameraPosition cameraPosition;
 
+        googleMap.clear();
+
         latLngEstatuaDeLaLibertad = new LatLng(19.314512, -99.112203);
         latLngLaTorreEiffel = new LatLng(48.8583701, 2.2944813);
         latLngInsadong = new LatLng(37.566, 126.9784);
@@ -212,6 +215,7 @@ public class MapaFragment extends Fragment {
                 "El Cabildo", "Fue una de las primeras expresiones democráticas que vivió esta gran aldea",
                 BitmapDescriptorFactory.fromResource(R.drawable.custom_marker));
 
+        //markers al mapa
         googleMap.addMarker(markerEstatuaDeLaLibertad);
         googleMap.addMarker(markerLaTorreEiffel);
         googleMap.addMarker(markerInsadong);
@@ -228,8 +232,9 @@ public class MapaFragment extends Fragment {
     }
 
     protected OnMapReadyCallback mapView_getMapAsync = new OnMapReadyCallback() {
+        @SuppressLint("MissingPermission")
         @Override
-        public void onMapReady(@NonNull GoogleMap googleMap) {
+        public void onMapReady(GoogleMap mMap) {
             googleMap = map;
 
             LatLng latLngEstatuaDeLaLibertad = new LatLng(-99.112203, 19.314512);
@@ -242,9 +247,6 @@ public class MapaFragment extends Fragment {
              CameraPosition cameraPosition;
              cameraPosition = new CameraPosition.Builder().target(latLngEstatuaDeLaLibertad).zoom(12).build();
              googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
-
-
 
         }
     };
