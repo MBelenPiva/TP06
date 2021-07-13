@@ -13,6 +13,7 @@ public class MainActivity extends BaseActivity {
     private EditText edtNombre;
     private Button btnContinuar;
 
+    InicioFragment inicioFragment;
     MapaFragment mapaFragment;
     AcercaDeFragment acercaDeFragment;
 
@@ -49,6 +50,7 @@ public class MainActivity extends BaseActivity {
     private void createFragments(){
         mapaFragment = new MapaFragment();
         acercaDeFragment = new AcercaDeFragment();
+        inicioFragment = new InicioFragment();
     }
 
     private void showInitialFragment(){
